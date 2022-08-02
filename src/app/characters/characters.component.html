@@ -1,0 +1,111 @@
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+
+        </div>
+        <form class="example" action="action_page.php">
+            <input type="text" placeholder="Search.." id="search" name="search" #search>
+            <button type="submit" (click)="findCharacter(search.value)"><img src="assets/search.png"/></button>
+        </form>
+        <mat-form-field appearance="fill">
+            <mat-label>Choose Order</mat-label>
+            <mat-select (selectionChange)="orderByE($event)">
+                <mat-option value="name"> Name Asc </mat-option>
+                <mat-option value="modified">Modified Asc</mat-option>
+                <mat-option value="-name"> Name Desc </mat-option>
+                <mat-option value="-modified">Modified Desc</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+
+
+<div class="container-fluid mt-5" *ngIf="!showSearchResult">
+    <h4 style="text-align:center"> Characters</h4>
+    <div>
+        <div *ngFor="let character of allCharacters let i = index ">
+            <div class="row  d-flex justify-content-center text-center" *ngIf="i%2 == 0">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="{{allCharacters[i].thumbnail.path +'/standard_medium.'+allCharacters[i].thumbnail.extension}}"
+                            width="50%" class="card-img-top" alt="Some Issue Loading Image..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ allCharacters[i].name }}</h5>
+                            <p class="card-text">{{ allCharacters[i].description}}</p>
+                            <h5 class="card-Subtitle">Comics</h5>
+                            <div *ngFor="let comic of allCharacters[i].comics.items let i = index">
+                                <p class="card-text" *ngIf="i<4">{{ comic.name }}</p>
+                            </div>
+                            <button type="button" (click)="fetchComicsByCharacter(allCharacters[i].id)"
+                                class="btn btn-outline-primary  mr-4" data-toggle="modal"
+                                data-target=".bd-example-modal-lg">Comics1</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="{{allCharacters[i+1].thumbnail.path +'/standard_medium.'+allCharacters[i+1].thumbnail.extension}}"
+                            width="50%" class="card-img-top" alt="Some Issue Loading Image..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ allCharacters[i+1].name }}</h5>
+                            <p class="card-text">{{ allCharacters[i+1].description}}</p>
+                            <h5 class="card-Subtitle">Comics</h5>
+                            <div *ngFor="let comic of allCharacters[i+1].comics.items let i = index">
+                                <p class="card-text" *ngIf="i<4">{{ comic.name }}</p>
+                            </div>
+                            <button type="button" (click)="fetchComicsByCharacter(allCharacters[i+1].id)"
+                                class="btn btn-outline-primary  mr-4" data-toggle="modal"
+                                data-target=".bd-example-modal-lg">Comics2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-outline-primary  mr-4" (click)="prevPage()" *ngIf="page != 0">Prev</button>
+
+        <button type="button" class="btn btn-outline-primary  mr-4" (click)="nextPage()">Next</button>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Comics</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row" *ngIf='showComics'>
+                        <div class="col-lg-3 mt-3 mb-3" *ngFor="let c of comics">
+                            <div class="card">
+                                <img src="{{c.thumbnail.path +'/standard_medium.'+c.thumbnail.extension}}" width="100%"
+                                    class="card-img-top" alt="Some Issue Loading Image..." />
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ c.title }}</h5>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div *ngIf='!showComics '>
+                        <h4> No Comics For this Character </h4>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
