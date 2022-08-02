@@ -11,12 +11,15 @@ import {HttpClientModule} from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MyBootstrapModalComponent } from './modals/modal-comic/modal-comic.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     CharactersComponent,
-    ComicsComponent
+    ComicsComponent,
+    MyBootstrapModalComponent
   ],
   imports: [
     BrowserModule,    
@@ -25,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     MatSelectModule,
     MatInputModule,
-    FormsModule
+    FormsModule, 
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

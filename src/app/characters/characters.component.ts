@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MarvelAPIService } from '../Service/mapi.service';
+import { MyBootstrapModalComponent } from '../modals/modal-comic/modal-comic.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-characters',
@@ -8,8 +11,10 @@ import { MarvelAPIService } from '../Service/mapi.service';
 })
 export class CharactersComponent implements OnInit {
 
-  constructor(private service:MarvelAPIService) { }
+  constructor(private service:MarvelAPIService, private modalService: NgbModal) { }
 
+  
+  title = 'angular-bootstrap-modal';
   config: any;
   allCharacters:any=[];
   comics:any=[];
@@ -19,19 +24,9 @@ export class CharactersComponent implements OnInit {
   searchedCharacter:any=[];
   page:number = 0;
   orderBy:string = '';
+  favComics:any=[];
 
-
-  selectedValue: any;
-  searchTxt: any;
-
-  items = [{
-    value : "name",
-    viewValue : "Order by Name"
-  },{
-    value : "modified",
-    viewValue : "Order by Date"
-  }];
-
+  @ViewChild('content') content: any;
 
 
   ngOnInit(): void {
@@ -71,7 +66,7 @@ export class CharactersComponent implements OnInit {
    })
 }
 
-fetchComicsByCharacter(characterId:string)
+comicsByCharacter(characterId:string)
   {
     console.log(characterId);
     this.service.getComicsByCharacter(characterId).subscribe((result)=>{
@@ -139,4 +134,31 @@ fetchComicsByCharacter(characterId:string)
       
     }
   }
+
+  openModal(comic:any) {
+    const modalRef = this.modalService.open(MyBootstrapModalComponent,
+      {
+        scrollable: true,
+        windowClass: 'myCustomModalClass',
+      });
+
+    let data = comic;
+
+    modalRef.componentInstance.fromParent = data;
+    modalRef.result.then((result) => {
+      console.log(result);
+    }, (reason) => {
+    });
+  }
+
+  saveFav(comic:any){
+    this.favComics.push(comic)
+  }
+
+  deleteFav(comic:any){
+    this.favComics.forEach((element:any,index:any)=>{
+      if(element===comic) this.favComics.splice(index,1);
+   });
+  }
+
 }
