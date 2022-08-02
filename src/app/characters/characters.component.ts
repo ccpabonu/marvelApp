@@ -151,6 +151,23 @@ comicsByCharacter(characterId:string)
     });
   }
 
+  openModal2(character:any) {
+    const modalRef = this.modalService.open(MyBootstrapModalComponent,
+      {
+        scrollable: true,
+        windowClass: 'myCustomModalClass',
+      });
+
+    let data = character;
+
+    modalRef.componentInstance.caracterfromParent = data;
+    modalRef.componentInstance.viewCaracter = true;
+    modalRef.result.then((result) => {
+      console.log(result);
+    }, (reason) => {
+    });
+  }
+
   saveFav(comic:any){
     this.favComics.push(comic)
   }

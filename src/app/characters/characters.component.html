@@ -36,6 +36,8 @@
                                     <div *ngFor="let comic of allCharacters[i].comics.items let i = index">
                                         <p class="card-text" *ngIf="i<4">{{ comic.name }}</p>
                                     </div>
+                                    <button type="button" (click)="openModal2(allCharacters[i])"
+                                        class="btn btn-outline-primary  mr-4">view More</button>
                                     <button type="button" (click)="comicsByCharacter(allCharacters[i].id)"
                                         class="btn btn-outline-primary  mr-4" data-toggle="modal"
                                         data-target=".bd-example-modal-lg">Comics</button>
@@ -53,6 +55,8 @@
                                     <div *ngFor="let comic of allCharacters[i+1].comics.items let i = index">
                                         <p class="card-text" *ngIf="i<4">{{ comic.name }}</p>
                                     </div>
+                                    <button type="button" (click)="openModal2(allCharacters[i+1])"
+                                        class="btn btn-outline-primary  mr-4">view More</button>
                                     <button type="button" (click)="comicsByCharacter(allCharacters[i+1].id)"
                                         class="btn btn-outline-primary  mr-4" data-toggle="modal"
                                         data-target=".bd-example-modal-lg">Comics</button>

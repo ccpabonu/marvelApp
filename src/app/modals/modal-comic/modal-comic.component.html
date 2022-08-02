@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="modal-content" *ngIf="!viewCaracter">
     <img src="{{fromParent.thumbnail.path +'/standard_medium.'+fromParent.thumbnail.extension}}"
     width="50%" class="card-img-top" alt="Some Issue Loading Image..." />
     <div class="modal-header">
@@ -17,6 +17,35 @@
 
     </div>
     <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="closeModal('close')">Close</button>
+    </div>
+</div>
+
+
+<div class="modal-content" *ngIf="viewCaracter">
+    <img src="{{caracterfromParent.thumbnail.path +'/standard_medium.'+caracterfromParent.thumbnail.extension}}"
+    width="50%" class="card-img-top" alt="Some Issue Loading Image..." />
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{caracterfromParent.name}}</h5>        
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <h4> Description </h4>
+            <p class="card-text"> {{ caracterfromParent.description }}</p>
+            <br>
+        </div>
+        <div class="container">
+            <h4> All Series </h4>
+            <p class="card-text" *ngFor="let serie of caracterfromParent.series.items">-{{ serie.name }}</p>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a href={{caracterfromParent.urls[1].url}}>           
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+            (click)="closeModal('close')">Link Official Page</button>
+        </a> 
         <button type="button" class="btn btn-secondary" data-dismiss="modal"
             (click)="closeModal('close')">Close</button>
     </div>

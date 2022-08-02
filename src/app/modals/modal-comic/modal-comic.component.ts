@@ -9,6 +9,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class MyBootstrapModalComponent implements OnInit {
 
   @Input() fromParent: any;
+  @Input() caracterfromParent: any;
+  @Input() viewCaracter: boolean = false;
 
   constructor(
     public activeModal: NgbActiveModal
